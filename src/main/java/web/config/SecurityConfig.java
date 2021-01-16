@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -34,11 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); // конфигурация для прохождения аутентификации
     }
 
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN", "USER"); //ADMIN
+        auth.inMemoryAuthentication().withUser("ADMIN").password("$2y$12$6s7zd3KmjO1HvMz.x1eK4et.f3vSxBt/7uWjVhw3opPjhFoMBq57q").roles("ADMIN", "USER"); //ADMIN
 //        auth.inMemoryAuthentication().withUser("USER_NAME").password("USER_PASSWORD").roles("USER"); //USER_PASSWORD
-//    }
+        auth.userDetailsService(userDetailsService);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -74,12 +78,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // защищенные URL
                 .antMatchers("/").permitAll() // доступность всем
                 .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
-                .antMatchers("/hello/**").access("hasAnyRole('USER')").anyRequest().authenticated();
+                .antMatchers("/user/**").access("hasAnyRole('USER')").anyRequest().authenticated();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-//        return new BCryptPasswordEncoder();
+//        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }
