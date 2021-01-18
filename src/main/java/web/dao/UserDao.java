@@ -6,6 +6,6 @@ import web.model.Role;
 import web.model.User;
 //добавил  extends JpaRepository<User, Integer>
 @Repository
-public interface UserDao extends JpaRepository<Role, Long> {
+public interface UserDao extends JpaRepository<User, Long> {
     User getUserByName(String name);
 }
