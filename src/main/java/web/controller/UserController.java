@@ -1,10 +1,12 @@
 package web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import web.service.UserDetailsServiceImpl;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -13,6 +15,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class UserController {
+
+	private final UserDetailsServiceImpl userDetailsService;
+	@Autowired
+	public UserController(UserDetailsServiceImpl userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
+
 	@GetMapping()
 	public String index() {
 		return "index";
@@ -40,6 +49,7 @@ public class UserController {
 		messages.add("This is page admin.");
 		messages.add("Welcom " + principal.getName());
 		model.addAttribute("messages", messages);
+//		model.addAttribute("users", userDetailsService.getAllUsers());
 		return "admin";
 	}
 

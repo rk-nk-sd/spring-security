@@ -15,7 +15,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name; // уникальное значение
+    private String login; // уникальное значение
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -24,9 +24,9 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long id, String name, String password, Set<Role> roles) {
+    public User(Long id, String login, String password, Set<Role> roles) {
         this.id = id;
-        this.name = name;
+        this.login = login;
         this.password = password;
         this.roles = roles;
     }
@@ -40,11 +40,11 @@ public class User implements UserDetails {
     }
 
     public String getName() {
-        return name;
+        return login;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.login = login;
     }
 
 
@@ -60,7 +60,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return login;
     }
 
     @Override

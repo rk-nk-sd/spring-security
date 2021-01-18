@@ -9,6 +9,30 @@
     <th:block th:each="msg : ${messages}">
         <h1 th:text="${msg}"></h1>
     </th:block>
+    <br/>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+
+                <td><a href="users/${user.id}">${user.id}</a></td>
+                <td><a href="users/${user.id}">${user.name}</a></td>
+                <td><a href="users/${user.id}">${user.surname}</a></td>
+                <td><a href="users/${user.id}">${user.email}</a></td>
+                <td>
+                    <a href="users/${user.id}" class="c">Сведения</a>
+                    <a href="users/${user.id}/edit" class="c">Редактировать</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+
 </div>
 </body>
 </html>
