@@ -1,5 +1,6 @@
 package web.config;
 
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,7 @@ public class HibernateConfig {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        BasicDataSource dataSource = new BasicDataSource();
 
         dataSource.setDriverClassName(environment.getRequiredProperty("PROP_DB_DRIVER"));
         dataSource.setUrl(environment.getRequiredProperty("PROP_DB_URL"));
